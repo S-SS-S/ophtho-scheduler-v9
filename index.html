@@ -108,20 +108,14 @@
           <div class="grid sm:grid-cols-2 gap-2" id="condsBox">
             <label class="inline-flex items-start gap-2 text-sm"><input type="checkbox" id="c_t1dm" onclick="toggleExtra()" class="mt-1 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" /><span id="tx_t1dm">السكري النوع الأول (بالغون)</span></label>
             <label class="inline-flex items-start gap-2 text-sm"><input type="checkbox" id="c_t2dm" onclick="toggleExtra()" class="mt-1 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" /><span id="tx_t2dm">السكري النوع الثاني (بالغون)</span></label>
-
-            <!-- UPDATED LABEL: anti-VEGF Arabic -->
             <label class="inline-flex items-start gap-2 text-sm"><input type="checkbox" id="c_antiVEGF" class="mt-1 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" /><span id="tx_antiVEGF">مضادات عامل نمو بطانة الأوعية الدموية</span></label>
-
-            <label class="inline-flex items-start gap-2 text-sm"><input type="checkbox" id="c_hba1c" class="mt-1 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" /><span id="tx_hba1c">HbA1c أعلى من الطبيعي</span></label>
+            <label class="inline-flex items-start gap-2 text-sm"><input type="checkbox" id="c_hba1c" class="mt-1 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" /><span id="tx_hba1c">السكر التراكمي أعلى من الطبيعي</span></label>
             <label class="inline-flex items-start gap-2 text-sm"><input type="checkbox" id="c_glp1" class="mt-1 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" /><span id="tx_glp1">استخدام أوزمبيك/مونجارُو</span></label>
             <label class="inline-flex items-start gap-2 text-sm"><input type="checkbox" id="c_glauSus" class="mt-1 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" /><span id="tx_glauSus">مشتبه ماء أزرق / ارتفاع ضغط العين</span></label>
             <label class="inline-flex items-start gap-2 text-sm"><input type="checkbox" id="c_fhGlau" class="mt-1 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" /><span id="tx_fhGlau">قرابة درجة أولى لمريض ماء أزرق</span></label>
             <label class="inline-flex items-start gap-2 text-sm"><input type="checkbox" id="c_highMy" class="mt-1 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" /><span id="tx_highMy">قصر نظر شديد (≤ −6.0D أو طول محوري &gt; 26 مم)</span></label>
             <label class="inline-flex items-start gap-2 text-sm"><input type="checkbox" id="c_ted" onclick="toggleExtra()" class="mt-1 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" /><span id="tx_ted">مرض عين درقي (غريفز)</span></label>
-
-            <!-- NEW CONDITION: Retinal laser (1 year) -->
             <label class="inline-flex items-start gap-2 text-sm"><input type="checkbox" id="c_retLaser" class="mt-1 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" /><span id="tx_retLaser">إجراء ليزر للشبكية</span></label>
-
             <label class="inline-flex items-start gap-2 text-sm"><input type="checkbox" id="c_noRisk" class="mt-1 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" /><span id="tx_noRisk">بالغون بلا عوامل خطورة</span></label>
           </div>
         </div>
@@ -149,10 +143,10 @@
           </div>
         </div>
 
+        <!-- Buttons under the form (Calc + Reset only — Print moved to Result tools) -->
         <div class="flex flex-wrap items-center gap-3 pt-2">
           <button type="button" id="btnCalc" class="px-5 py-2.5 rounded-xl bg-indigo-600 text-white font-medium hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500" onclick="onCalc()">احسب الزيارة القادمة</button>
           <button type="button" id="resetBtn" class="px-4 py-2 rounded-xl border bg-white text-slate-700 hover:bg-slate-50 border-slate-300 dark:bg-slate-800 dark:text-slate-200 dark:border-slate-600 dark:hover:bg-slate-700" onclick="onReset()">إعادة ضبط</button>
-          <button type="button" id="printBtn" class="px-4 py-2 rounded-xl border bg-white text-slate-700 hover:bg-slate-50 border-slate-300 dark:bg-slate-800 dark:text-slate-200 dark:border-slate-600 dark:hover:bg-slate-700 ml-auto" onclick="window.print()">طباعة/حفظ PDF</button>
         </div>
       </form>
     </section>
@@ -162,9 +156,10 @@
 
       <div class="no-print mt-3 p-3 rounded-2xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800">
         <div id="actionsTitle" class="text-sm font-medium mb-2">أدوات النتيجة</div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-          <button id="copyBtn" type="button" class="px-4 py-2 rounded-xl border bg-white text-slate-700 hover:bg-slate-50 border-slate-300 dark:bg-slate-800 dark:text-slate-200 dark:border-slate-600 dark:hover:bg-slate-700 w-full border-2 border-slate-400 dark:border-slate-500" onclick="copySummary()">Copy / Share</button>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+          <button id="copyBtn" type="button" class="px-4 py-2 rounded-xl border bg-white text-slate-700 hover:bg-slate-50 border-slate-300 dark:bg-slate-800 dark:text-slate-200 dark:border-slate-600 dark:hover:bg-slate-700 w-full border-2 border-slate-400 dark:border-slate-500" onclick="copyShare()">Copy / Share</button>
           <button id="icsBtn" type="button" class="px-4 py-2 rounded-xl border bg-white text-slate-700 hover:bg-slate-50 border-slate-300 dark:bg-slate-800 dark:text-slate-200 dark:border-slate-600 dark:hover:bg-slate-700 w-full border-2 border-slate-400 dark:border-slate-500" onclick="downloadIcs()">Add to Calendar (.ics)</button>
+          <button id="printBtn" type="button" class="px-4 py-2 rounded-xl border bg-white text-slate-700 hover:bg-slate-50 border-slate-300 dark:bg-slate-800 dark:text-slate-200 dark:border-slate-600 dark:hover:bg-slate-700 w-full border-2 border-slate-400 dark:border-slate-500" onclick="window.print()">طباعة/حفظ PDF</button>
         </div>
         <label class="mt-3 inline-flex items-center gap-2 text-sm">
           <input id="earliestOnly" type="checkbox" class="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" onclick="rebuildAfterToggle()" />
@@ -229,7 +224,7 @@
       footer:"© 2025 جميع الحقوق محفوظة لسُلطان عبد الرحمن الحسن. Ophth-Scheduler™ — يُحظر نسخ أو إعادة توزيع أو استخراج أو إجراء هندسة عكسية دون إذن.",
       tx:{ t1dm:"السكري النوع الأول (بالغون)", t2dm:"السكري النوع الثاني (بالغون)",
            antiVEGF:"مضادات عامل نمو بطانة الأوعية الدموية",
-           hba1c:"HbA1c أعلى من الطبيعي",
+           hba1c:"السكر التراكمي أعلى من الطبيعي",
            glp1:"استخدام سيماجلوتايد (أوزمبيك) أو تيرزيباتايد (مونجارو)",
            glauSus:"مشتبه ماء أزرق / ارتفاع ضغط العين", fhGlau:"قرابة درجة أولى لمريض ماء أزرق",
            highMy:"قصر نظر شديد (≤ −6.0D أو طول محوري > 26 مم)",
@@ -302,7 +297,6 @@
     setText('helpTed', TR[currentLang].helpTed);
     setText('btnCalc', TR[currentLang].btnCalc);
     setText('resetBtn', TR[currentLang].btnReset);
-    setText('printBtn', TR[currentLang].btnPrint);
     setText('resultsTitle', TR[currentLang].resultsTitle);
     setText('ruleExplain', TR[currentLang].ruleExplain);
     setText('lblEarliestOnly', TR[currentLang].earliestOnly);
@@ -312,8 +306,13 @@
     setText('lblAgeGroup', TR[currentLang].ageGroup);
     setText('helpAgeGroup', TR[currentLang].helpAgeGroup);
 
-    // The three you asked earlier to localize
+    // Result tools: localize these three buttons
     setText('actionsTitle', TR[currentLang].actionsTitle);
+    setText('copyBtn', TR[currentLang].copyShare);
+    setText('icsBtn', TR[currentLang].addCalendar);
+    setText('printBtn', TR[currentLang].btnPrint);
+
+    // Disclaimer + footer
     setText('disclaimer',   TR[currentLang].disclaimer);
     setText('footerText',   TR[currentLang].footer);
 
@@ -414,7 +413,6 @@
     }
 
     var recs=[];
-
     function pushAnnual(label, basisOverride){
       recs.push({label:label, next:addYears(lastVisit,1), window:null, basis: basisOverride || (currentLang==='ar'?'فحص سنوي':'Annual')});
     }
@@ -435,20 +433,15 @@
       }
     }
 
-    // Diabetes -> by severity (3/6/9/12 months)
     if(document.getElementById('c_t1dm').checked) recs.push({label:getTx('t1dm'), next:dmNextBySeverity(lastVisit), window:null, basis:(currentLang==='ar'?'حسب شدة السكري':'By diabetes severity')});
     if(document.getElementById('c_t2dm').checked) recs.push({label:getTx('t2dm'), next:dmNextBySeverity(lastVisit), window:null, basis:(currentLang==='ar'?'حسب شدة السكري':'By diabetes severity')});
 
-    // Anti-VEGF: monthly during active therapy
     if(document.getElementById('c_antiVEGF').checked) recs.push({label:getTx('antiVEGF'), next:addMonths(lastVisit,1), window:null, basis:(currentLang==='ar'?'متابعة شهرية أثناء العلاج':'Monthly during active therapy')});
 
-    // HbA1c high: yearly
     if(document.getElementById('c_hba1c').checked) pushAnnual(getTx('hba1c'), (currentLang==='ar'?'ارتفاع HbA1c: سنوي':'HbA1c high: yearly'));
 
-    // GLP-1/GIP: yearly
     if(document.getElementById('c_glp1').checked) pushAnnual(getTx('glp1'), (currentLang==='ar'?'GLP-1/GIP: سنوي':'GLP-1/GIP: yearly'));
 
-    // Thyroid eye disease
     if(document.getElementById('c_ted').checked){
       var active = document.getElementById('tedActive').checked;
       if(active){
@@ -459,12 +452,10 @@
       }
     }
 
-    // NEW: Retinal laser → yearly from last visit
     if(document.getElementById('c_retLaser').checked){
       pushAnnual(getTx('retLaser'), (currentLang==='ar'?'بعد الليزر الشبكي: سنوي':'After retinal laser: yearly'));
     }
 
-    // Sort/prepare
     recs = recs.filter(function(r){return r.next instanceof Date && !isNaN(r.next);})
                .sort(function(a,b){return a.next - b.next;});
     var earliest = recs.length?recs[0]:null;
@@ -515,16 +506,27 @@
     document.getElementById('lastVisit').removeAttribute('disabled');
   }
 
-  function copySummary(){
+  // Copy / Share: try Web Share API first, fallback to clipboard
+  async function copyShare(){
     var txt = document.getElementById('summary').innerText.trim();
     if(!txt) return;
-    if(navigator.clipboard && navigator.clipboard.writeText){
-      navigator.clipboard.writeText(txt).then(function(){ alert(currentLang==='ar'?'تم النسخ.':'Copied.'); });
-    } else {
-      var ta=document.createElement('textarea'); ta.value=txt; document.body.appendChild(ta); ta.select();
-      try{ document.execCommand('copy'); alert(currentLang==='ar'?'تم النسخ.':'Copied.'); }catch(e){}
-      document.body.removeChild(ta);
-    }
+    try{
+      if(navigator.share){
+        await navigator.share({ title: document.title, text: txt });
+        return;
+      }
+    }catch(e){ /* fall through to copy */ }
+    try{
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        await navigator.clipboard.writeText(txt);
+        alert(currentLang==='ar'?'تم النسخ.':'Copied.');
+        return;
+      }
+    }catch(e){}
+    // Legacy fallback
+    var ta=document.createElement('textarea'); ta.value=txt; document.body.appendChild(ta); ta.select();
+    try{ document.execCommand('copy'); alert(currentLang==='ar'?'تم النسخ.':'Copied.'); }catch(e){}
+    document.body.removeChild(ta);
   }
 
   function downloadIcs(){
