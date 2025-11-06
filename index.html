@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Ophth-Scheduler | حاسبة مواعيد العيون</title>
-  <meta name="description" content="Ophthalmology visit scheduler in Arabic/English with diabetes severity, anti-VEGF, HbA1c, GLP-1, and more." />
+  <meta name="description" content="Ophthalmology visit scheduler in Arabic/English with diabetes severity, anti-VEGF, HbA1c, GLP-1, retinal laser, and more." />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -108,13 +108,20 @@
           <div class="grid sm:grid-cols-2 gap-2" id="condsBox">
             <label class="inline-flex items-start gap-2 text-sm"><input type="checkbox" id="c_t1dm" onclick="toggleExtra()" class="mt-1 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" /><span id="tx_t1dm">السكري النوع الأول (بالغون)</span></label>
             <label class="inline-flex items-start gap-2 text-sm"><input type="checkbox" id="c_t2dm" onclick="toggleExtra()" class="mt-1 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" /><span id="tx_t2dm">السكري النوع الثاني (بالغون)</span></label>
-            <label class="inline-flex items-start gap-2 text-sm"><input type="checkbox" id="c_antiVEGF" class="mt-1 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" /><span id="tx_antiVEGF">استخدام مضادات VEGF (حقن)</span></label>
+
+            <!-- UPDATED LABEL: anti-VEGF Arabic -->
+            <label class="inline-flex items-start gap-2 text-sm"><input type="checkbox" id="c_antiVEGF" class="mt-1 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" /><span id="tx_antiVEGF">مضادات عامل نمو بطانة الأوعية الدموية</span></label>
+
             <label class="inline-flex items-start gap-2 text-sm"><input type="checkbox" id="c_hba1c" class="mt-1 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" /><span id="tx_hba1c">HbA1c أعلى من الطبيعي</span></label>
             <label class="inline-flex items-start gap-2 text-sm"><input type="checkbox" id="c_glp1" class="mt-1 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" /><span id="tx_glp1">استخدام أوزمبيك/مونجارُو</span></label>
             <label class="inline-flex items-start gap-2 text-sm"><input type="checkbox" id="c_glauSus" class="mt-1 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" /><span id="tx_glauSus">مشتبه ماء أزرق / ارتفاع ضغط العين</span></label>
             <label class="inline-flex items-start gap-2 text-sm"><input type="checkbox" id="c_fhGlau" class="mt-1 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" /><span id="tx_fhGlau">قرابة درجة أولى لمريض ماء أزرق</span></label>
             <label class="inline-flex items-start gap-2 text-sm"><input type="checkbox" id="c_highMy" class="mt-1 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" /><span id="tx_highMy">قصر نظر شديد (≤ −6.0D أو طول محوري &gt; 26 مم)</span></label>
             <label class="inline-flex items-start gap-2 text-sm"><input type="checkbox" id="c_ted" onclick="toggleExtra()" class="mt-1 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" /><span id="tx_ted">مرض عين درقي (غريفز)</span></label>
+
+            <!-- NEW CONDITION: Retinal laser (1 year) -->
+            <label class="inline-flex items-start gap-2 text-sm"><input type="checkbox" id="c_retLaser" class="mt-1 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" /><span id="tx_retLaser">إجراء ليزر للشبكية</span></label>
+
             <label class="inline-flex items-start gap-2 text-sm"><input type="checkbox" id="c_noRisk" class="mt-1 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" /><span id="tx_noRisk">بالغون بلا عوامل خطورة</span></label>
           </div>
         </div>
@@ -221,11 +228,13 @@
       disclaimer:"تنبيه: هذه أداة تثقيفية ولا تُغني عن التقييم الطبي.",
       footer:"© 2025 جميع الحقوق محفوظة لسُلطان عبد الرحمن الحسن. Ophth-Scheduler™ — يُحظر نسخ أو إعادة توزيع أو استخراج أو إجراء هندسة عكسية دون إذن.",
       tx:{ t1dm:"السكري النوع الأول (بالغون)", t2dm:"السكري النوع الثاني (بالغون)",
-           antiVEGF:"استخدام مضادات VEGF (حقن)", hba1c:"HbA1c أعلى من الطبيعي",
+           antiVEGF:"مضادات عامل نمو بطانة الأوعية الدموية",
+           hba1c:"HbA1c أعلى من الطبيعي",
            glp1:"استخدام سيماجلوتايد (أوزمبيك) أو تيرزيباتايد (مونجارو)",
            glauSus:"مشتبه ماء أزرق / ارتفاع ضغط العين", fhGlau:"قرابة درجة أولى لمريض ماء أزرق",
            highMy:"قصر نظر شديد (≤ −6.0D أو طول محوري > 26 مم)",
-           ted:"مرض عين درقي (غريفز)", noRisk:"بالغون بلا عوامل خطورة" }
+           ted:"مرض عين درقي (غريفز)", noRisk:"بالغون بلا عوامل خطورة",
+           retLaser:"إجراء ليزر للشبكية" }
     },
     en: {
       title:"Ophthalmology Visit Scheduler",
@@ -257,11 +266,13 @@
       disclaimer:"Note: This is an educational tool and does not replace professional medical evaluation.",
       footer:"© 2025 Sultan Abdulrahman Alhassan. Ophth-Scheduler™ — Unauthorized copying, redistribution, scraping, or reverse engineering is prohibited.",
       tx:{ t1dm:"Type 1 diabetes (adults)", t2dm:"Type 2 diabetes (adults)",
-           antiVEGF:"On anti-VEGF therapy (injections)", hba1c:"HbA1c above normal",
+           antiVEGF:"On anti-VEGF therapy (injections)",
+           hba1c:"HbA1c above normal",
            glp1:"Using semaglutide (Ozempic) or tirzepatide (Mounjaro)",
            glauSus:"Glaucoma suspect / ocular hypertension", fhGlau:"First-degree relative of glaucoma",
            highMy:"High myopia (≤ −6.0D or axial length > 26 mm)",
-           ted:"Thyroid eye disease (Graves)", noRisk:"Adults without known risk factors" }
+           ted:"Thyroid eye disease (Graves)", noRisk:"Adults without known risk factors",
+           retLaser:"Undergone retinal laser" }
     }
   };
 
@@ -301,10 +312,10 @@
     setText('lblAgeGroup', TR[currentLang].ageGroup);
     setText('helpAgeGroup', TR[currentLang].helpAgeGroup);
 
-    // NEW: wire the three items you asked for
-    setText('actionsTitle', TR[currentLang].actionsTitle);     // أدوات النتيجة ⇄ Result tools
-    setText('disclaimer',   TR[currentLang].disclaimer);       // التنبيه ⇄ English note
-    setText('footerText',   TR[currentLang].footer);           // الفوتر ⇄ English footer
+    // The three you asked earlier to localize
+    setText('actionsTitle', TR[currentLang].actionsTitle);
+    setText('disclaimer',   TR[currentLang].disclaimer);
+    setText('footerText',   TR[currentLang].footer);
 
     // Condition labels
     setText('tx_t1dm', TR[currentLang].tx.t1dm);
@@ -316,6 +327,7 @@
     setText('tx_fhGlau', TR[currentLang].tx.fhGlau);
     setText('tx_highMy', TR[currentLang].tx.highMy);
     setText('tx_ted', TR[currentLang].tx.ted);
+    setText('tx_retLaser', TR[currentLang].tx.retLaser);
     setText('tx_noRisk', TR[currentLang].tx.noRisk);
   }
   function setText(id, txt){ var el=document.getElementById(id); if(el){ el.textContent = txt; } }
@@ -403,7 +415,9 @@
 
     var recs=[];
 
-    function pushAnnual(label){ recs.push({label:label, next:addYears(lastVisit,1), window:null, basis:(currentLang==='ar'?'فحص سنوي':'Annual')}); }
+    function pushAnnual(label, basisOverride){
+      recs.push({label:label, next:addYears(lastVisit,1), window:null, basis: basisOverride || (currentLang==='ar'?'فحص سنوي':'Annual')});
+    }
 
     if(document.getElementById('c_glauSus').checked) pushAnnual(getTx('glauSus'));
     if(document.getElementById('c_fhGlau').checked)  pushAnnual(getTx('fhGlau'));
@@ -421,25 +435,36 @@
       }
     }
 
+    // Diabetes -> by severity (3/6/9/12 months)
     if(document.getElementById('c_t1dm').checked) recs.push({label:getTx('t1dm'), next:dmNextBySeverity(lastVisit), window:null, basis:(currentLang==='ar'?'حسب شدة السكري':'By diabetes severity')});
     if(document.getElementById('c_t2dm').checked) recs.push({label:getTx('t2dm'), next:dmNextBySeverity(lastVisit), window:null, basis:(currentLang==='ar'?'حسب شدة السكري':'By diabetes severity')});
 
+    // Anti-VEGF: monthly during active therapy
     if(document.getElementById('c_antiVEGF').checked) recs.push({label:getTx('antiVEGF'), next:addMonths(lastVisit,1), window:null, basis:(currentLang==='ar'?'متابعة شهرية أثناء العلاج':'Monthly during active therapy')});
 
-    if(document.getElementById('c_hba1c').checked) recs.push({label:getTx('hba1c'), next:addYears(lastVisit,1), window:null, basis:(currentLang==='ar'?'ارتفاع HbA1c: سنوي':'HbA1c high: yearly')});
+    // HbA1c high: yearly
+    if(document.getElementById('c_hba1c').checked) pushAnnual(getTx('hba1c'), (currentLang==='ar'?'ارتفاع HbA1c: سنوي':'HbA1c high: yearly'));
 
-    if(document.getElementById('c_glp1').checked) recs.push({label:getTx('glp1'), next:addYears(lastVisit,1), window:null, basis:(currentLang==='ar'?'GLP-1/GIP: سنوي':'GLP-1/GIP: yearly')});
+    // GLP-1/GIP: yearly
+    if(document.getElementById('c_glp1').checked) pushAnnual(getTx('glp1'), (currentLang==='ar'?'GLP-1/GIP: سنوي':'GLP-1/GIP: yearly'));
 
+    // Thyroid eye disease
     if(document.getElementById('c_ted').checked){
       var active = document.getElementById('tedActive').checked;
       if(active){
         var early=addMonths(lastVisit,3), late=addMonths(lastVisit,6);
         recs.push({label:getTx('ted'), next:early, window:[early,late], basis:(currentLang==='ar'?'نشِط: كل 3–6 أشهر':'Active: every 3–6 months')});
       } else {
-        recs.push({label:getTx('ted'), next:addYears(lastVisit,1), window:null, basis:(currentLang==='ar'?'مستقر: سنوي':'Stable: annual')});
+        pushAnnual(getTx('ted'), (currentLang==='ar'?'مستقر: سنوي':'Stable: annual'));
       }
     }
 
+    // NEW: Retinal laser → yearly from last visit
+    if(document.getElementById('c_retLaser').checked){
+      pushAnnual(getTx('retLaser'), (currentLang==='ar'?'بعد الليزر الشبكي: سنوي':'After retinal laser: yearly'));
+    }
+
+    // Sort/prepare
     recs = recs.filter(function(r){return r.next instanceof Date && !isNaN(r.next);})
                .sort(function(a,b){return a.next - b.next;});
     var earliest = recs.length?recs[0]:null;
