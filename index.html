@@ -15,9 +15,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet" />
   <style>
     html { scroll-behavior: smooth; }
-    /* Note: @apply requires a build step; leaving utilities in markup ensures styling without a build. */
-    .error-text{color:#dc2626}.invalid{outline:0;box-shadow:0 0 0 4px rgba(244,63,94,.25);border-color:#ef4444}
-    @media print{html{color-scheme:light}body{background:#fff!important}.no-print{display:none!important}}
+    .error-text { color: #dc2626; font-size: 12px; margin-top: .25rem }
+    .invalid { outline: 0; box-shadow: 0 0 0 4px rgba(244,63,94,.25); border-color:#ef4444 }
+    @media print { html{color-scheme:light} body{background:#fff!important} .no-print{display:none!important} }
   </style>
 </head>
 <body class="min-h-screen bg-gradient-to-br from-slate-50 via-cyan-50 to-indigo-50 text-slate-800 dark:from-slate-900 dark:via-slate-900 dark:to-slate-900 dark:text-slate-100">
@@ -26,14 +26,14 @@
       <h1 id="title" class="text-2xl md:text-3xl font-bold">حاسبة مواعيد زيارة طبيب العيون</h1>
       <div class="flex flex-wrap items-center gap-2">
         <div class="inline-flex items-center gap-2 rounded-full px-3 py-1 text-sm border border-slate-300 bg-white dark:bg-slate-800 dark:border-slate-600">
-          <button id="lang-ar" class="font-medium" aria-pressed="true" onclick="window.__setLang && window.__setLang('ar')">العربية</button>
+          <button id="lang-ar" class="font-medium">العربية</button>
           <span class="mx-1">|</span>
-          <button id="lang-en" onclick="window.__setLang && window.__setLang('en')">English</button>
+          <button id="lang-en">English</button>
         </div>
         <div class="inline-flex items-center gap-2 rounded-full px-3 py-1 text-sm border border-slate-300 bg-white dark:bg-slate-800 dark:border-slate-600" title="Theme">
-          <button id="theme-light" class="font-medium" onclick="window.__setTheme && window.__setTheme('light')">Light</button>
+          <button id="theme-light" class="font-medium">Light</button>
           <span class="mx-1">/</span>
-          <button id="theme-dark" onclick="window.__setTheme && window.__setTheme('dark')">Dark</button>
+          <button id="theme-dark">Dark</button>
         </div>
       </div>
     </div>
@@ -41,7 +41,7 @@
   </header>
 
   <main class="max-w-5xl mx-auto px-4 py-6">
-    <!-- CONTACT BOX (auto-localizes) -->
+    <!-- CONTACT BOX -->
     <div class="mb-4">
       <details class="bg-white/80 dark:bg-slate-900/70 backdrop-blur shadow-lg rounded-2xl border border-gray-200 dark:border-slate-700 p-4 w-full sm:w-auto sm:min-w-[260px] ml-auto">
         <summary id="contactSummary" class="cursor-pointer select-none text-sm font-medium flex items-center justify-between">
@@ -60,7 +60,7 @@
     <!-- END CONTACT BOX -->
 
     <section class="bg-white/80 dark:bg-slate-900/70 backdrop-blur shadow-lg rounded-2xl border border-gray-200 dark:border-slate-700 p-5 md:p-6">
-      <form id="schedulerForm" class="space-y-6">
+      <form id="schedulerForm" class="space-y-6" novalidate>
         <div class="grid md:grid-cols-2 gap-4">
           <div class="space-y-3">
             <div class="flex items-center gap-2">
@@ -101,18 +101,18 @@
           </div>
         </div>
 
-        <!-- Conditions searchable multi-select -->
+        <!-- Conditions selectable list -->
         <div>
           <h2 id="condHeader" class="text-lg font-semibold mb-2">اختر الحالات/الظروف لديك</h2>
           <p id="condHelper" class="text-sm text-slate-600 dark:text-slate-300 mb-3">يمكنك اختيار أكثر من حالة؛ سنعرض أقرب موعد.</p>
 
           <div id="condMultiRoot" class="relative">
-            <div id="condControl" class="flex flex-wrap items-center gap-2 p-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 cursor-text" onclick="window.__openDropdown && window.__openDropdown();">
+            <div id="condControl" class="flex flex-wrap items-center gap-2 p-2 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 cursor-text">
               <div id="selectedChips" class="flex flex-wrap gap-2"></div>
-              <input id="condSearch" type="text" class="flex-1 min-w-[10ch] bg-transparent outline-none text-sm placeholder-slate-400 dark:placeholder-slate-500" placeholder="ابحث عن الحالة..." oninput="window.__renderDropdown && window.__renderDropdown(this.value);window.__openDropdown && window.__openDropdown();" />
-              <button id="clearConds" type="button" class="text-xs text-slate-500 hover:underline hidden" onclick="window.__clearConds && window.__clearConds()">مسح</button>
+              <input id="condSearch" type="text" class="flex-1 min-w-[10ch] bg-transparent outline-none text-sm placeholder-slate-400 dark:placeholder-slate-500" placeholder="ابحث عن الحالة..." />
+              <button id="clearConds" type="button" class="text-xs text-slate-500 hover:underline hidden">مسح</button>
             </div>
-            <div id="condDropdown" class="absolute z-20 mt-1 w-full max-height-64 overflow-auto rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 shadow-xl hidden"></div>
+            <div id="condDropdown" class="absolute z-20 mt-1 w-full max-h-64 overflow-auto rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 shadow-xl hidden"></div>
           </div>
         </div>
 
@@ -131,7 +131,7 @@
             </div>
           </div>
 
-          <!-- Thyroid eye disease toggle -->
+          <!-- Thyroid eye disease -->
           <div id="extra-ted" class="hidden">
             <div class="flex items-center gap-2">
               <input id="tedActive" type="checkbox" class="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" />
@@ -142,9 +142,9 @@
         </div>
 
         <div class="flex flex-wrap items-center gap-3 pt-2">
-          <button type="submit" id="btnCalc" class="px-5 py-2.5 rounded-xl bg-indigo-600 text-white font-medium hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500" onclick="window.__onCalc && window.__onCalc(event)">احسب الزيارة القادمة</button>
-          <button type="button" id="resetBtn" class="px-4 py-2 rounded-xl border bg-white text-slate-700 hover:bg-slate-50 border-slate-300 dark:bg-slate-800 dark:text-slate-200 dark:border-slate-600 dark:hover:bg-slate-700" onclick="window.__onReset && window.__onReset()">إعادة ضبط</button>
-          <button type="button" id="printBtn" class="px-4 py-2 rounded-xl border bg-white text-slate-700 hover:bg-slate-50 border-slate-300 dark:bg-slate-800 dark:text-slate-200 dark:border-slate-600 dark:hover:bg-slate-700 ml-auto" onclick="window.print()">طباعة/حفظ PDF</button>
+          <button type="submit" id="btnCalc" class="px-5 py-2.5 rounded-xl bg-indigo-600 text-white font-medium hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">احسب الزيارة القادمة</button>
+          <button type="button" id="resetBtn" class="px-4 py-2 rounded-xl border bg-white text-slate-700 hover:bg-slate-50 border-slate-300 dark:bg-slate-800 dark:text-slate-200 dark:border-slate-600 dark:hover:bg-slate-700">إعادة ضبط</button>
+          <button type="button" id="printBtn" class="px-4 py-2 rounded-xl border bg-white text-slate-700 hover:bg-slate-50 border-slate-300 dark:bg-slate-800 dark:text-slate-200 dark:border-slate-600 dark:hover:bg-slate-700 ml-auto">طباعة/حفظ PDF</button>
         </div>
       </form>
     </section>
@@ -157,11 +157,11 @@
       <div class="no-print mt-3 p-3 rounded-2xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800">
         <div id="actionsTitle" class="text-sm font-medium mb-2">أدوات النتيجة</div>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-          <button id="copyBtn" class="px-4 py-2 rounded-xl border bg-white text-slate-700 hover:bg-slate-50 border-slate-300 dark:bg-slate-800 dark:text-slate-200 dark:border-slate-600 dark:hover:bg-slate-700 w-full border-2 border-slate-400 dark:border-slate-500" onclick="window.__onCopy && window.__onCopy()">Copy / Share</button>
-          <button id="icsBtn" class="px-4 py-2 rounded-xl border bg-white text-slate-700 hover:bg-slate-50 border-slate-300 dark:bg-slate-800 dark:text-slate-200 dark:border-slate-600 dark:hover:bg-slate-700 w-full border-2 border-slate-400 dark:border-slate-500" onclick="window.__onIcs && window.__onIcs()">Add to Calendar (.ics)</button>
+          <button id="copyBtn" class="px-4 py-2 rounded-xl border bg-white text-slate-700 hover:bg-slate-50 border-slate-300 dark:bg-slate-800 dark:text-slate-200 dark:border-slate-600 dark:hover:bg-slate-700 w-full border-2 border-slate-400 dark:border-slate-500">Copy / Share</button>
+          <button id="icsBtn" class="px-4 py-2 rounded-xl border bg-white text-slate-700 hover:bg-slate-50 border-slate-300 dark:bg-slate-800 dark:text-slate-200 dark:border-slate-600 dark:hover:bg-slate-700 w-full border-2 border-slate-400 dark:border-slate-500">Add to Calendar (.ics)</button>
         </div>
         <label class="mt-3 inline-flex items-center gap-2 text-sm">
-          <input id="earliestOnly" type="checkbox" class="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" onclick="window.__rebuild && window.__rebuild()" />
+          <input id="earliestOnly" type="checkbox" class="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" />
           <span id="lblEarliestOnly">عرض الأقرب فقط</span>
         </label>
       </div>
@@ -348,7 +348,7 @@
       }
     };
 
-    // ===== Conditions metadata (HCQ/Tamox removed; new ones added) =====
+    // ===== Conditions (HCQ/Tamox removed; new ones added) =====
     const CONDITIONS = [
       { id: 'noRiskAdults', type: 'ageRange' },
       { id: 'healthyChildren', type: 'text' },
@@ -375,7 +375,9 @@
     // ===== Theme =====
     const THEME_KEY='oph_theme';
     function setTheme(th){const root=document.documentElement;if(th==='dark'){root.classList.add('dark');root.classList.remove('light');}else{root.classList.remove('dark');root.classList.add('light');th='light';}localStorage.setItem(THEME_KEY,th);}
-    window.__setTheme=setTheme; setTheme(localStorage.getItem(THEME_KEY)||'light');
+    document.getElementById('theme-light').addEventListener('click',()=>setTheme('light'));
+    document.getElementById('theme-dark').addEventListener('click',()=>setTheme('dark'));
+    setTheme(localStorage.getItem(THEME_KEY)||'light');
 
     // ===== Language =====
     let currentLang='ar';
@@ -392,40 +394,43 @@
         ['resultsTitle','resultsTitle'],['ruleExplain','ruleExplain'],['footerText','footer'],['lblEarliestOnly','earliestOnly'],
         ['copyBtn','copyShare'],['icsBtn','addCalendar'],['lblAgeGroup','ageGroup'],['helpAgeGroup','helpAgeGroup']
       ];
-      ids.forEach(([id,key])=>{const el=document.getElementById(id); if(el){ if(id==='copyBtn'||id==='icsBtn') el.textContent=t(key); else el.textContent=t(key); }});
-      const cs=document.getElementById('contactSummary'); if(cs) cs.firstChild.nodeValue = t('contact.summary')+' ';
-      const cel=document.getElementById('contactEmailLabel'); if(cel) cel.textContent=t('contact.email');
-      const cph=document.getElementById('contactPhoneLabel'); if(cph) cph.textContent=t('contact.phone');
-      const searchEl=document.getElementById('condSearch'); if(searchEl) searchEl.placeholder=t('condSearchPh');
-      const clearBtn=document.getElementById('clearConds'); if(clearBtn) clearBtn.textContent=t('condClear');
-      __renderDropdown(document.getElementById('condSearch')?.value||''); __renderChips(); __toggleExtra();
+      ids.forEach(([id,key])=>{const el=document.getElementById(id); if(el){ el.textContent=t(key); }});
+      document.getElementById('contactSummary').firstChild.nodeValue = t('contact.summary')+' ';
+      document.getElementById('contactEmailLabel').textContent = t('contact.email');
+      document.getElementById('contactPhoneLabel').textContent = t('contact.phone');
+      document.getElementById('condSearch').placeholder = t('condSearchPh');
+      document.getElementById('clearConds').textContent = t('condClear');
+      renderDropdown(document.getElementById('condSearch').value||''); renderChips(); toggleExtra();
     }
-    window.__setLang=setLang;
+    document.getElementById('lang-ar').addEventListener('click',()=>setLang('ar'));
+    document.getElementById('lang-en').addEventListener('click',()=>setLang('en'));
 
-    // ===== Multi-select =====
+    // ===== Conditions multi-select =====
     const selectedIds=new Set();
-    function __renderChips(){
-      const chipsEl=document.getElementById('selectedChips'); if(!chipsEl) return; chipsEl.innerHTML='';
-      selectedIds.forEach(id=>{
-        const cond=CONDITIONS.find(c=>c.id===id);
+    const chipsEl=document.getElementById('selectedChips');
+    const searchEl=document.getElementById('condSearch');
+    const dropdownEl=document.getElementById('condDropdown');
+    const rootEl=document.getElementById('condMultiRoot');
+    const clearBtn=document.getElementById('clearConds');
+
+    function renderChips(){
+      chipsEl.innerHTML=''; selectedIds.forEach(id=>{
         const span=document.createElement('span');
         span.className='inline-flex items-center gap-2 rounded-full px-2.5 py-1 text-xs border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800';
         span.innerHTML=`<span>${t(\`conds.${id}\`)}</span><button type="button" aria-label="remove" class="text-slate-500 hover:text-rose-600">×</button>`;
-        span.querySelector('button').onclick=()=>{selectedIds.delete(id);__renderChips();__renderDropdown(document.getElementById('condSearch').value);__toggleExtra();};
+        span.querySelector('button').onclick=()=>{selectedIds.delete(id);renderChips();renderDropdown(searchEl.value);toggleExtra();};
         chipsEl.appendChild(span);
       });
-      const clearBtn=document.getElementById('clearConds'); if(clearBtn) clearBtn.classList.toggle('hidden',selectedIds.size===0);
+      clearBtn.classList.toggle('hidden',selectedIds.size===0);
     }
-    window.__renderChips=__renderChips;
 
-    function __renderDropdown(filter=''){
-      const dropdownEl=document.getElementById('condDropdown'); if(!dropdownEl) return;
+    function renderDropdown(filter=''){
       const f=(filter||'').trim().toLowerCase(); dropdownEl.innerHTML='';
       CONDITIONS.filter(c=>t(\`conds.${c.id}\`).toLowerCase().includes(f)).forEach(c=>{
         const checked=selectedIds.has(c.id);
-        const btn=document.createElement('button'); btn.type='button';
-        btn.className=`w-full text-right px-3 py-2 border-b last:border-b-0 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 ${checked?'bg-indigo-50/60 dark:bg-indigo-900/30':''}`;
-        btn.innerHTML=`
+        const row=document.createElement('button'); row.type='button';
+        row.className=`w-full text-right px-3 py-2 border-b last:border-b-0 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 ${checked?'bg-indigo-50/60 dark:bg-indigo-900/30':''}`;
+        row.innerHTML=`
           <div class="flex items-start gap-2">
             <input type="checkbox" ${checked?'checked':''} class="mt-1 pointer-events-none rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" />
             <div>
@@ -433,163 +438,167 @@
               <div class="text-xs text-slate-500 dark:text-slate-400">${t(\`explain.${c.type}\`)}</div>
             </div>
           </div>`;
-        btn.onclick=()=>{ if(checked) selectedIds.delete(c.id); else selectedIds.add(c.id); __renderChips(); __renderDropdown(f); __toggleExtra(); };
-        dropdownEl.appendChild(btn);
+        row.onclick=()=>{ if(checked) selectedIds.delete(c.id); else selectedIds.add(c.id); renderChips(); renderDropdown(f); toggleExtra(); };
+        dropdownEl.appendChild(row);
       });
     }
-    window.__renderDropdown=__renderDropdown;
-    function __openDropdown(){ const d=document.getElementById('condDropdown'); if(d) d.classList.remove('hidden'); }
-    window.__openDropdown=__openDropdown;
-    document.addEventListener('click',e=>{ const root=document.getElementById('condMultiRoot'); const d=document.getElementById('condDropdown'); if(root && d && !root.contains(e.target)) d.classList.add('hidden'); });
-    function __clearConds(){ selectedIds.clear(); __renderChips(); __renderDropdown(document.getElementById('condSearch').value); __toggleExtra(); }
-    window.__clearConds=__clearConds;
+
+    function openDropdown(){ dropdownEl.classList.remove('hidden'); }
+    function closeDropdown(){ dropdownEl.classList.add('hidden'); }
+    document.getElementById('condControl').addEventListener('click',()=>{ openDropdown(); searchEl.focus(); });
+    searchEl.addEventListener('input',e=>{ renderDropdown(e.target.value); openDropdown(); });
+    clearBtn.addEventListener('click',()=>{ selectedIds.clear(); renderChips(); renderDropdown(searchEl.value); toggleExtra(); });
+    document.addEventListener('click',e=>{ if(!rootEl.contains(e.target)) closeDropdown(); });
     function getSelectedConditions(){ return CONDITIONS.filter(c=>selectedIds.has(c.id)).map(c=>({...c,label:t(\`conds.${c.id}\`)})); }
 
-    // ===== Toggles =====
+    // ===== Age group toggle =====
     const ageGroupToggle=document.getElementById('ageGroupToggle');
-    ageGroupToggle.addEventListener('change',()=>{ document.getElementById('dobWrap').classList.toggle('hidden',ageGroupToggle.checked); document.getElementById('ageGroupWrap').classList.toggle('hidden',!ageGroupToggle.checked); });
+    ageGroupToggle.addEventListener('change',()=>{
+      document.getElementById('dobWrap').classList.toggle('hidden',ageGroupToggle.checked);
+      document.getElementById('ageGroupWrap').classList.toggle('hidden',!ageGroupToggle.checked);
+    });
 
-    // ===== Extra fields visibility =====
-    function sel(key){ return selectedIds.has(key); }
-    function __toggleExtra(){
+    // ===== Conditional fields visibility =====
+    function sel(id){return selectedIds.has(id);}
+    function toggleExtra(){
       const showDm=sel('t1dm')||sel('t2dm'); const any=showDm||sel('ted');
-      const cf=document.getElementById('conditionalFields'); if(cf) cf.classList.toggle('hidden',!any);
-      const dm=document.getElementById('extra-dm-severity'); if(dm) dm.classList.toggle('hidden',!showDm);
-      const ted=document.getElementById('extra-ted'); if(ted) ted.classList.toggle('hidden',!sel('ted'));
+      document.getElementById('conditionalFields').classList.toggle('hidden',!any);
+      document.getElementById('extra-dm-severity').classList.toggle('hidden',!showDm);
+      document.getElementById('extra-ted').classList.toggle('hidden',!sel('ted'));
     }
-    window.__toggleExtra=__toggleExtra;
 
-    // ===== Helpers =====
+    // ===== Reset / Print =====
     function clearFieldError(id){const i=document.getElementById(id);const e=document.getElementById(id+'Error');if(i&&e){e.textContent='';e.classList.add('hidden');i.classList.remove('invalid');}}
+    document.getElementById('resetBtn').addEventListener('click',()=>{
+      document.getElementById('schedulerForm').reset();
+      selectedIds.clear(); renderChips(); renderDropdown('');
+      document.getElementById('conditionalFields').classList.add('hidden');
+      document.getElementById('resultsCard').classList.add('hidden');
+      clearFieldError('lastVisit'); clearFieldError('dob');
+    });
+    document.getElementById('printBtn').addEventListener('click',()=>window.print());
+
+    // ===== Submit =====
     function showFieldError(id,msg){const i=document.getElementById(id);const e=document.getElementById(id+'Error');if(!(i&&e))return;e.textContent=msg;e.classList.remove('hidden');i.classList.add('invalid');i.scrollIntoView({behavior:'smooth',block:'start'});setTimeout(()=>i.focus({preventScroll:true}),350);}
 
-    // ===== Main actions =====
     const NO_VISIT_ID='noOphthVisit';
-    function dmNextBySeverity(baseDate){
-      const v=(document.querySelector('input[name="dmSeverity"]:checked')||{}).value||'unknown';
-      if(v==='severe')return addMonths(baseDate,3);
-      if(v==='moderate')return addMonths(baseDate,6);
-      if(v==='mild')return addMonths(baseDate,9);
-      return addYears(baseDate,1);
-    }
 
-    function buildResults(lastVisit, ageYears, ageGroupLabel){
-      const resultsCard=document.getElementById('resultsCard');
-      const summary=document.getElementById('summary');
-      const details=document.getElementById('details');
-      const dueBanner=document.getElementById('dueBanner');
-      const selected=getSelectedConditions();
+    document.getElementById('schedulerForm').addEventListener('submit', (e)=>{
+      e.preventDefault();
 
-      const recommendations=[]; const notes=[];
-      selected.forEach(c=>{
-        switch(c.type){
-          case 'annual': recommendations.push({id:c.id,label:c.label,nextDate:addYears(lastVisit,1),window:null,basis:(currentLang==='ar'?'فحص سنوي':'Annual')});break;
-          case 'ageRange':
-            if(ageYears<40){notes.push(t('adultsUnder40'));}
-            else if(ageYears<=54){recommendations.push({id:c.id,label:c.label,nextDate:addYears(lastVisit,2),window:[addYears(lastVisit,2),addYears(lastVisit,4)],basis:t('explain.ageRange')+' (40–54)'});}
-            else if(ageYears<=64){recommendations.push({id:c.id,label:c.label,nextDate:addYears(lastVisit,1),window:[addYears(lastVisit,1),addYears(lastVisit,3)],basis:t('explain.ageRange')+' (55–64)'});}
-            else{recommendations.push({id:c.id,label:c.label,nextDate:addYears(lastVisit,1),window:[addYears(lastVisit,1),addYears(lastVisit,2)],basis:t('explain.ageRange')+' (≥65)'});} break;
-          case 'text': notes.push(t('explain.text')); break;
-          case 'dm': recommendations.push({id:c.id,label:c.label,nextDate:dmNextBySeverity(lastVisit),window:null,basis:t('dmExplain')}); break;
-          case 'antiVEGF': recommendations.push({id:c.id,label:c.label,nextDate:addMonths(lastVisit,1),window:null,basis:t('explain.antiVEGF')}); break;
-          case 'hba1c': recommendations.push({id:c.id,label:c.label,nextDate:addYears(lastVisit,1),window:null,basis:t('explain.hba1c')}); break;
-          case 'glp1': recommendations.push({id:c.id,label:c.label,nextDate:addYears(lastVisit,1),window:null,basis:t('explain.glp1')}); break;
-          case 'pregnancyDM': notes.push(t('explain.pregnancyDM')); break;
-          case 'gdm': notes.push(t('explain.gdm')); break;
-          case 'thyroidEye':
-            const active=!!document.getElementById('tedActive')?.checked;
-            if(active){const early=addMonths(lastVisit,3),late=addMonths(lastVisit,6);recommendations.push({id:c.id,label:c.label,nextDate:early,window:[early,late],basis:(currentLang==='ar'?'كل 3–6 أشهر أثناء النشاط':'Every 3–6 months while active')});}
-            else{recommendations.push({id:c.id,label:c.label,nextDate:addYears(lastVisit,1),window:null,basis:(currentLang==='ar'?'سنوي بعد الاستقرار':'Annual when stable')});}
-            break;
-        }
-      });
-
-      const dated=recommendations.filter(r=>r.nextDate instanceof Date && !isNaN(r.nextDate)).sort((a,b)=>a.nextDate-b.nextDate);
-      const earliest=dated.length?dated[0]:null;
-
-      let s=`<div class="text-sm text-slate-600 dark:text-slate-300">${t('lastVisitShort')}: <span class="font-medium">${fmt(lastVisit)}</span>`;
-      if(ageYears!=null) s+=` • ${document.getElementById('ageGroupToggle').checked?t('ageGroupLabel'):t('age')}: <span class="font-medium">${document.getElementById('ageGroupToggle').checked?ageGroupLabel:ageYears}</span>`;
-      s+=`</div>`;
-
-      if(earliest){
-        s+=`<div class="mt-2 text-lg">${t('earliest')}: <span class="font-semibold">${fmt(earliest.nextDate)}</span></div>`;
-        const today0=new Date(); today0.setHours(0,0,0,0); const diff=daysBetween(earliest.nextDate,today0);
-        dueBanner.classList.remove('hidden');
-        if(diff<0){dueBanner.className='mt-3 p-3 rounded-xl border text-sm bg-rose-50 dark:bg-rose-900/30 border-rose-200 dark:border-rose-700 text-rose-800 dark:text-rose-200'; dueBanner.textContent=tp('overdueBy',Math.abs(diff));}
-        else if(diff===0){dueBanner.className='mt-3 p-3 rounded-xl border text-sm bg-amber-50 dark:bg-amber-900/30 border-amber-200 dark:border-amber-700 text-amber-800 dark:text-amber-200'; dueBanner.textContent=t('dueNow');}
-        else {dueBanner.className='mt-3 p-3 rounded-xl border text-sm bg-emerald-50 dark:bg-emerald-900/30 border-emerald-200 dark:border-emerald-700 text-emerald-800 dark:text-emerald-200'; dueBanner.textContent=tp('dueIn',diff);}
-      } else { s+=`<div class="mt-2 text-lg">${t('noneAuto')}</div>`; dueBanner.classList.add('hidden'); }
-      summary.innerHTML=s;
-
-      const earliestOnly=document.getElementById('earliestOnly').checked; const list=earliestOnly&&earliest?[earliest]:dated;
-      details.innerHTML='';
-      list.forEach(r=>{
-        const row=document.createElement('div'); row.className='p-3 border rounded-xl bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-600';
-        const windowTxt=r.window?`${t('window')}: ${fmt(r.window[0])} → ${fmt(r.window[1])}`:'';
-        row.innerHTML=`<div class="font-medium">${r.label}</div>
-          <div class="text-sm text-slate-700 dark:text-slate-300">${t('basis')}: ${r.basis}</div>
-          <div class="text-sm">${t('nextVisit')}: <span class="font-semibold">${fmt(r.nextDate)}</span>${windowTxt?`<div class='text-xs text-slate-600 dark:text-slate-400 mt-1'>${windowTxt}</div>`:''}</div>`;
-        details.appendChild(row);
-      });
-      resultsCard.scrollIntoView({behavior:'smooth',block:'start'});
-    }
-
-    function __onCalc(e){
-      if(e) e.preventDefault();
+      // If "no visit" → ASAP, ignore everything else
       const noVisit=document.getElementById(NO_VISIT_ID).checked;
       const today=new Date(); today.setHours(0,0,0,0);
-      let lastVisit=null;
 
-      if(noVisit){
-        const resultsCard=document.getElementById('resultsCard'); const summary=document.getElementById('summary'); const dueBanner=document.getElementById('dueBanner'); const details=document.getElementById('details');
-        resultsCard.classList.remove('hidden');
-        summary.innerHTML=`<div class="text-lg font-semibold">${t('asapMsg')}</div>`;
-        dueBanner.classList.add('hidden'); details.innerHTML=''; return;
+      let lastVisit=null;
+      if(!noVisit){
+        const lastVisitStr=document.getElementById('lastVisit').value;
+        if(!lastVisitStr){ showFieldError('lastVisit',t('errRequiredDate')); return; } else { clearFieldError('lastVisit'); }
+        lastVisit=new Date(lastVisitStr);
+        if(lastVisit>today){ showFieldError('lastVisit',t('errFutureDate')); return; } else { clearFieldError('lastVisit'); }
       }
 
-      const lastVisitStr=document.getElementById('lastVisit').value;
-      if(!lastVisitStr){ showFieldError('lastVisit',t('errRequiredDate')); return; } else { clearFieldError('lastVisit'); }
-      lastVisit=new Date(lastVisitStr);
-      if(lastVisit>today){ showFieldError('lastVisit',t('errFutureDate')); return; } else { clearFieldError('lastVisit'); }
-
       let ageYears=null; let ageGroupLabel='';
-      const ag=document.getElementById('ageGroupToggle').checked;
-      if(ag){
+      if(document.getElementById('ageGroupToggle').checked){
         const g=document.getElementById('ageGroup').value;
-        if(g==='u40'){ageYears=30;ageGroupLabel=(currentLang==='ar'?'< 40':'< 40');}
-        if(g==='40-54'){ageYears=45;ageGroupLabel='40–54';}
-        if(g==='55-64'){ageYears=60;ageGroupLabel='55–64';}
-        if(g==='>=65'){ageYears=70;ageGroupLabel='≥65';}
+        if(g==='u40'){ ageYears=30; ageGroupLabel=(currentLang==='ar'?'< 40':'< 40'); }
+        if(g==='40-54'){ ageYears=45; ageGroupLabel='40–54'; }
+        if(g==='55-64'){ ageYears=60; ageGroupLabel='55–64'; }
+        if(g==='>=65'){ ageYears=70; ageGroupLabel='≥65'; }
         clearFieldError('dob');
       }else{
         const dobStr=document.getElementById('dob').value;
         if(!dobStr){ showFieldError('dob',t('errRequiredDob')); return; } else { clearFieldError('dob'); }
         const dob=new Date(dobStr); ageYears=calcAgeYears(dob);
       }
-      buildResults(lastVisit, ageYears, ageGroupLabel);
-    }
-    window.__onCalc=__onCalc;
 
-    function __onReset(){
-      const form=document.getElementById('schedulerForm'); form.reset();
-      selectedIds.clear(); __renderChips(); __renderDropdown('');
-      document.getElementById('conditionalFields').classList.add('hidden');
-      document.getElementById('resultsCard').classList.add('hidden');
-      clearFieldError('lastVisit'); clearFieldError('dob');
-    }
-    window.__onReset=__onReset;
+      const resultsCard=document.getElementById('resultsCard');
+      const summary=document.getElementById('summary');
+      const details=document.getElementById('details');
+      const dueBanner=document.getElementById('dueBanner');
+      resultsCard.classList.remove('hidden');
 
-    function __onCopy(){
-      const resultsCard=document.getElementById('resultsCard'); if(resultsCard.classList.contains('hidden')) return;
-      const summary=document.getElementById('summary').innerText.replace(/\s+/g,' ').trim();
-      try{ navigator.clipboard.writeText(summary); alert(currentLang==='ar'?'تم النسخ.':'Copied.'); }catch(_){}
-    }
-    window.__onCopy=__onCopy;
+      if(noVisit){
+        summary.innerHTML = `<div class="text-lg font-semibold">${t('asapMsg')}</div>`;
+        dueBanner.classList.add('hidden'); details.innerHTML=''; return;
+      }
 
-    function __onIcs(){
-      const details=document.getElementById('details'); const first=details.querySelector('.font-medium'); if(!first) return;
-      const dateText=document.getElementById('summary').innerText.match(/\d{2}\/\d{2}\/\d{4}/); if(!dateText) return;
-      const [d,m,y]=dateText[0].split('/'); const ymd=`${y}${m}${d}`;
+      const selected=getSelectedConditions();
+      const recommendations=[];
+
+      function dmNextBySeverity(baseDate){
+        const v=(document.querySelector('input[name="dmSeverity"]:checked')||{}).value||'unknown';
+        if(v==='severe') return addMonths(baseDate,3);
+        if(v==='moderate') return addMonths(baseDate,6);
+        if(v==='mild') return addMonths(baseDate,9);
+        return addYears(baseDate,1);
+      }
+
+      selected.forEach(c=>{
+        switch(c.type){
+          case 'annual': recommendations.push({label:c.label,nextDate:addYears(lastVisit,1),window:null,basis:(currentLang==='ar'?'فحص سنوي':'Annual')}); break;
+          case 'ageRange':
+            if(ageYears<40) { /* info only */ }
+            else if(ageYears<=54){ recommendations.push({label:c.label,nextDate:addYears(lastVisit,2),window:[addYears(lastVisit,2),addYears(lastVisit,4)],basis:t('explain.ageRange')+' (40–54)'}); }
+            else if(ageYears<=64){ recommendations.push({label:c.label,nextDate:addYears(lastVisit,1),window:[addYears(lastVisit,1),addYears(lastVisit,3)],basis:t('explain.ageRange')+' (55–64)'}); }
+            else { recommendations.push({label:c.label,nextDate:addYears(lastVisit,1),window:[addYears(lastVisit,1),addYears(lastVisit,2)],basis:t('explain.ageRange')+' (≥65)'}); }
+            break;
+          case 'text': /* note only */ break;
+          case 'dm': recommendations.push({label:c.label,nextDate:dmNextBySeverity(lastVisit),window:null,basis:t('dmExplain')}); break;
+          case 'antiVEGF': recommendations.push({label:c.label,nextDate:addMonths(lastVisit,1),window:null,basis:t('explain.antiVEGF')}); break;
+          case 'hba1c': recommendations.push({label:c.label,nextDate:addYears(lastVisit,1),window:null,basis:t('explain.hba1c')}); break;
+          case 'glp1': recommendations.push({label:c.label,nextDate:addYears(lastVisit,1),window:null,basis:t('explain.glp1')}); break;
+          case 'pregnancyDM': /* note */ break;
+          case 'gdm': /* note */ break;
+          case 'thyroidEye':
+            const active=!!document.getElementById('tedActive')?.checked;
+            if(active){const early=addMonths(lastVisit,3),late=addMonths(lastVisit,6); recommendations.push({label:c.label,nextDate:early,window:[early,late],basis:(currentLang==='ar'?'كل 3–6 أشهر أثناء النشاط':'Every 3–6 months while active')});}
+            else{ recommendations.push({label:c.label,nextDate:addYears(lastVisit,1),window:null,basis:(currentLang==='ar'?'سنوي بعد الاستقرار':'Annual when stable')}); }
+            break;
+        }
+      });
+
+      const dated=recommendations.filter(r=>r.nextDate instanceof Date && !isNaN(r.nextDate)).sort((a,b)=>a.nextDate-b.nextDate);
+      const earliest=dated[0];
+
+      let s = `<div class="text-sm text-slate-600 dark:text-slate-300">${t('lastVisitShort')}: <span class="font-medium">${fmt(lastVisit)}</span>`;
+      s += ` • ${document.getElementById('ageGroupToggle').checked?t('ageGroupLabel'):t('age')}: <span class="font-medium">${document.getElementById('ageGroupToggle').checked?ageGroupLabel:ageYears}</span>`;
+      s += `</div>`;
+
+      if(earliest){
+        s += `<div class="mt-2 text-lg">${t('earliest')}: <span class="font-semibold">${fmt(earliest.nextDate)}</span></div>`;
+        const today0=new Date(); today0.setHours(0,0,0,0); const diff=daysBetween(earliest.nextDate,today0);
+        dueBanner.classList.remove('hidden');
+        if(diff<0){ dueBanner.className='mt-3 p-3 rounded-xl border text-sm bg-rose-50 dark:bg-rose-900/30 border-rose-200 dark:border-rose-700 text-rose-800 dark:text-rose-200'; dueBanner.textContent = `متأخر بـ ${Math.abs(diff)} يوم`; }
+        else if(diff===0){ dueBanner.className='mt-3 p-3 rounded-xl border text-sm bg-amber-50 dark:bg-amber-900/30 border-amber-200 dark:border-amber-700 text-amber-800 dark:text-amber-200'; dueBanner.textContent = t('dueNow'); }
+        else { dueBanner.className='mt-3 p-3 rounded-xl border text-sm bg-emerald-50 dark:bg-emerald-900/30 border-emerald-200 dark:border-emerald-700 text-emerald-800 dark:text-emerald-200'; dueBanner.textContent = (currentLang==='ar'?`متبقٍ ${diff} يوم`:`Due in ${diff} days`); }
+      } else {
+        s += `<div class="mt-2 text-lg">${t('noneAuto')}</div>`; dueBanner.classList.add('hidden');
+      }
+      document.getElementById('summary').innerHTML = s;
+
+      const earliestOnly=document.getElementById('earliestOnly').checked;
+      const list = earliestOnly && earliest ? [earliest] : dated;
+      const container = document.getElementById('details'); container.innerHTML='';
+      list.forEach(r=>{
+        const row=document.createElement('div'); row.className='p-3 border rounded-xl bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-600';
+        const windowTxt=r.window?`${t('window')}: ${fmt(r.window[0])} → ${fmt(r.window[1])}`:'';
+        row.innerHTML=`<div class="font-medium">${r.label}</div>
+          <div class="text-sm text-slate-700 dark:text-slate-300">${t('basis')}: ${r.basis}</div>
+          <div class="text-sm">${t('nextVisit')}: <span class="font-semibold">${fmt(r.nextDate)}</span>${windowTxt?`<div class='text-xs text-slate-600 dark:text-slate-400 mt-1'>${windowTxt}</div>`:''}</div>`;
+        container.appendChild(row);
+      });
+    });
+
+    // Copy & ICS & Earliest only
+    document.getElementById('copyBtn').addEventListener('click', async ()=>{
+      const txt = document.getElementById('summary').innerText.trim();
+      try { await navigator.clipboard.writeText(txt); alert(currentLang==='ar'?'تم النسخ.':'Copied.'); } catch(e){}
+    });
+    document.getElementById('icsBtn').addEventListener('click', ()=>{
+      // pick earliest date from summary (DD/MM/YYYY)
+      const m=document.getElementById('summary').innerText.match(/\b(\d{2})\/(\d{2})\/(\d{4})\b/);
+      if(!m) return; const [_,dd,mm,yy]=m; const ymd=`${yy}${mm}${dd}`;
       const title=currentLang==='ar'?'موعد فحص عيون موصى به':'Recommended ophthalmology visit';
       const ics=`BEGIN:VCALENDAR
 VERSION:2.0
@@ -603,14 +612,23 @@ SUMMARY:${title}
 END:VEVENT
 END:VCALENDAR`;
       const blob=new Blob([ics],{type:'text/calendar;charset=utf-8'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='ophthalmology-visit.ics'; a.click(); URL.revokeObjectURL(url);
-    }
-    window.__onIcs=__onIcs;
+    });
+    document.getElementById('earliestOnly').addEventListener('change', ()=>{
+      // Re-run submit to rebuild list
+      const form=document.getElementById('schedulerForm');
+      form.dispatchEvent(new Event('submit',{bubbles:true,cancelable:true}));
+    });
 
-    function __rebuild(){ const lv=document.getElementById('lastVisit').value; if(!lv) return; __onCalc(new Event('submit')); }
-    window.__rebuild=__rebuild;
+    // Force submit handler even if native validation would block
+    document.getElementById('btnCalc').addEventListener('click', function(ev){
+      ev.preventDefault();
+      const form=document.getElementById('schedulerForm');
+      form.dispatchEvent(new Event('submit',{bubbles:true,cancelable:true}));
+    });
 
-    // Initialize UI
-    __renderDropdown(''); __renderChips(); setLang('ar');
+    // Init
+    function initLang(){ setLang('ar'); }
+    renderDropdown(''); renderChips(); toggleExtra(); initLang();
   });
   </script>
 </body>
