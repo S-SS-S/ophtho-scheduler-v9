@@ -41,7 +41,7 @@
   </header>
 
   <main class="max-w-5xl mx-auto px-4 py-6">
-    <!-- CONTACT BOX (auto-localizes with language toggle) -->
+    <!-- CONTACT BOX -->
     <div class="mb-4">
       <details class="bg-white/80 dark:bg-slate-900/70 backdrop-blur shadow-lg rounded-2xl border border-gray-200 dark:border-slate-700 p-4 w-full sm:w-auto sm:min-w-[260px] ml-auto">
         <summary id="contactSummary" class="cursor-pointer select-none text-sm font-medium flex items-center justify-between">
@@ -60,7 +60,6 @@
     <!-- END CONTACT BOX -->
 
     <section class="bg-white/80 dark:bg-slate-900/70 backdrop-blur shadow-lg rounded-2xl border border-gray-200 dark:border-slate-700 p-5 md:p-6">
-      <!-- novalidate so browser doesn't block our JS -->
       <form id="schedulerForm" class="space-y-6" novalidate>
         <div class="grid md:grid-cols-2 gap-4">
           <div class="space-y-3">
@@ -101,7 +100,7 @@
           </div>
         </div>
 
-        <!-- Conditions (simple, reliable checkboxes; HCQ/Tamox removed) -->
+        <!-- Conditions -->
         <div>
           <h2 id="condHeader" class="text-lg font-semibold mb-2">اختر الحالات/الظروف لديك</h2>
           <p id="condHelper" class="text-sm text-slate-600 dark:text-slate-300 mb-3">يمكنك اختيار أكثر من حالة؛ سنعرض أقرب موعد.</p>
@@ -218,6 +217,9 @@
       earliestOnly:"عرض الأقرب فقط", copyShare:"نسخ/مشاركة", addCalendar:"إضافة إلى التقويم (.ics)",
       dueNow:"مستحق الآن", overdueBy:function(d){return "متأخر بـ "+d+" يوم";}, dueIn:function(d){return "متبقٍ "+d+" يوم";},
       contact:{summary:"تواصل", email:"البريد الإلكتروني", phone:"الهاتف"},
+      actionsTitle:"أدوات النتيجة",
+      disclaimer:"تنبيه: هذه أداة تثقيفية ولا تُغني عن التقييم الطبي.",
+      footer:"© 2025 جميع الحقوق محفوظة لسُلطان عبد الرحمن الحسن. Ophth-Scheduler™ — يُحظر نسخ أو إعادة توزيع أو استخراج أو إجراء هندسة عكسية دون إذن.",
       tx:{ t1dm:"السكري النوع الأول (بالغون)", t2dm:"السكري النوع الثاني (بالغون)",
            antiVEGF:"استخدام مضادات VEGF (حقن)", hba1c:"HbA1c أعلى من الطبيعي",
            glp1:"استخدام سيماجلوتايد (أوزمبيك) أو تيرزيباتايد (مونجارو)",
@@ -251,6 +253,9 @@
       earliestOnly:"Show only earliest", copyShare:"Copy / Share", addCalendar:"Add to Calendar (.ics)",
       dueNow:"Due now", overdueBy:function(d){return "Overdue by "+d+" day"+(d===1?"":"s");}, dueIn:function(d){return "Due in "+d+" day"+(d===1?"":"s");},
       contact:{summary:"Contact", email:"Email", phone:"Phone"},
+      actionsTitle:"Result tools",
+      disclaimer:"Note: This is an educational tool and does not replace professional medical evaluation.",
+      footer:"© 2025 Sultan Abdulrahman Alhassan. Ophth-Scheduler™ — Unauthorized copying, redistribution, scraping, or reverse engineering is prohibited.",
       tx:{ t1dm:"Type 1 diabetes (adults)", t2dm:"Type 2 diabetes (adults)",
            antiVEGF:"On anti-VEGF therapy (injections)", hba1c:"HbA1c above normal",
            glp1:"Using semaglutide (Ozempic) or tirzepatide (Mounjaro)",
@@ -296,6 +301,11 @@
     setText('lblAgeGroup', TR[currentLang].ageGroup);
     setText('helpAgeGroup', TR[currentLang].helpAgeGroup);
 
+    // NEW: wire the three items you asked for
+    setText('actionsTitle', TR[currentLang].actionsTitle);     // أدوات النتيجة ⇄ Result tools
+    setText('disclaimer',   TR[currentLang].disclaimer);       // التنبيه ⇄ English note
+    setText('footerText',   TR[currentLang].footer);           // الفوتر ⇄ English footer
+
     // Condition labels
     setText('tx_t1dm', TR[currentLang].tx.t1dm);
     setText('tx_t2dm', TR[currentLang].tx.t2dm);
@@ -340,7 +350,7 @@
     document.getElementById('extra-dm-severity').classList.toggle('hidden', !dm);
     document.getElementById('extra-ted').classList.toggle('hidden', !ted);
   }
-  function rebuildAfterToggle(){ // just re-run calc if visible
+  function rebuildAfterToggle(){
     if(!document.getElementById('resultsCard').classList.contains('hidden')) onCalc();
   }
 
@@ -368,7 +378,6 @@
       clearFieldError('lastVisit');
     }
 
-    // Age / age group
     var ageYears=null, ageGroupLabel='';
     if(document.getElementById('ageGroupToggle').checked){
       var g=document.getElementById('ageGroup').value;
@@ -383,7 +392,6 @@
       clearFieldError('dob'); ageYears=calcAgeYears(new Date(dobStr));
     }
 
-    // Show results card
     document.getElementById('resultsCard').classList.remove('hidden');
 
     if(noVisit){
@@ -393,17 +401,14 @@
       return false;
     }
 
-    // Build recommendations
     var recs=[];
 
-    // Annual set: glaucoma suspect, FH glaucoma, high myopia
     function pushAnnual(label){ recs.push({label:label, next:addYears(lastVisit,1), window:null, basis:(currentLang==='ar'?'فحص سنوي':'Annual')}); }
 
     if(document.getElementById('c_glauSus').checked) pushAnnual(getTx('glauSus'));
     if(document.getElementById('c_fhGlau').checked)  pushAnnual(getTx('fhGlau'));
     if(document.getElementById('c_highMy').checked)  pushAnnual(getTx('highMy'));
 
-    // Adults without risk: by age range (use lastVisit as anchor)
     if(document.getElementById('c_noRisk').checked){
       if(ageYears<40){
         // info only
@@ -416,20 +421,15 @@
       }
     }
 
-    // Diabetes (T1/T2) → severity box controls 3/6/9/12 months
     if(document.getElementById('c_t1dm').checked) recs.push({label:getTx('t1dm'), next:dmNextBySeverity(lastVisit), window:null, basis:(currentLang==='ar'?'حسب شدة السكري':'By diabetes severity')});
     if(document.getElementById('c_t2dm').checked) recs.push({label:getTx('t2dm'), next:dmNextBySeverity(lastVisit), window:null, basis:(currentLang==='ar'?'حسب شدة السكري':'By diabetes severity')});
 
-    // Anti-VEGF: monthly while under treatment
     if(document.getElementById('c_antiVEGF').checked) recs.push({label:getTx('antiVEGF'), next:addMonths(lastVisit,1), window:null, basis:(currentLang==='ar'?'متابعة شهرية أثناء العلاج':'Monthly during active therapy')});
 
-    // HbA1c high → 1 year from last visit
     if(document.getElementById('c_hba1c').checked) recs.push({label:getTx('hba1c'), next:addYears(lastVisit,1), window:null, basis:(currentLang==='ar'?'ارتفاع HbA1c: سنوي':'HbA1c high: yearly')});
 
-    // GLP-1/GIP (Ozempic/Mounjaro) → yearly unless advised otherwise
     if(document.getElementById('c_glp1').checked) recs.push({label:getTx('glp1'), next:addYears(lastVisit,1), window:null, basis:(currentLang==='ar'?'GLP-1/GIP: سنوي':'GLP-1/GIP: yearly')});
 
-    // Thyroid eye disease
     if(document.getElementById('c_ted').checked){
       var active = document.getElementById('tedActive').checked;
       if(active){
@@ -440,12 +440,10 @@
       }
     }
 
-    // Sort by earliest
     recs = recs.filter(function(r){return r.next instanceof Date && !isNaN(r.next);})
                .sort(function(a,b){return a.next - b.next;});
     var earliest = recs.length?recs[0]:null;
 
-    // Summary line
     var s = '<div class="text-sm text-slate-600 dark:text-slate-300">'+TR[currentLang].lastVisitShort+': <span class="font-medium">'+fmt(lastVisit)+'</span>';
     s += ' • '+(document.getElementById('ageGroupToggle').checked?TR[currentLang].ageGroupLabel:TR[currentLang].age)+': <span class="font-medium">'+(document.getElementById('ageGroupToggle').checked?ageGroupLabel:ageYears)+'</span>';
     s += '</div>';
@@ -464,7 +462,6 @@
     }
     document.getElementById('summary').innerHTML = s;
 
-    // Details list
     var container=document.getElementById('details'); container.innerHTML='';
     var showEarliestOnly=document.getElementById('earliestOnly').checked;
     var list = (showEarliestOnly && earliest)?[earliest]:recs;
@@ -490,7 +487,6 @@
     document.getElementById('extra-ted').classList.add('hidden');
     document.getElementById('resultsCard').classList.add('hidden');
     clearFieldError('lastVisit'); clearFieldError('dob');
-    // ensure lastVisit re-enabled if it was disabled by "no visit"
     document.getElementById('lastVisit').removeAttribute('disabled');
   }
 
@@ -500,7 +496,6 @@
     if(navigator.clipboard && navigator.clipboard.writeText){
       navigator.clipboard.writeText(txt).then(function(){ alert(currentLang==='ar'?'تم النسخ.':'Copied.'); });
     } else {
-      // Fallback
       var ta=document.createElement('textarea'); ta.value=txt; document.body.appendChild(ta); ta.select();
       try{ document.execCommand('copy'); alert(currentLang==='ar'?'تم النسخ.':'Copied.'); }catch(e){}
       document.body.removeChild(ta);
@@ -508,7 +503,6 @@
   }
 
   function downloadIcs(){
-    // Grab first DD/MM/YYYY in summary
     var m=document.getElementById('summary').innerText.match(/\b(\d{2})\/(\d{2})\/(\d{4})\b/);
     if(!m) return; var dd=m[1], mm=m[2], yy=m[3]; var ymd=yy+mm+dd;
     var title=(currentLang==='ar')?'موعد فحص عيون موصى به':'Recommended ophthalmology visit';
